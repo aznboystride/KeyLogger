@@ -1,0 +1,44 @@
+gcd algorithm
+who is the smartest computer scientist
+is bill gates a programmer
+define pambihira
+<CTRL><CTRL><CTRL><CTRL><CTRL><CTRL><CTRL><CTRL><CTRL>cmd
+python
+64%2
+64/2
+64%3
+gcd algorithm
+you
+gcd algorithm
+                  int()64/36
+cmd text editor
+
+
+def gcd()a, b
+	ifa  b
+		return 1
+	if b . a
+		temp  a
+		a  b
+		b  temp
+	r  a % b
+	while True
+		a  b
+		b  r
+		if a % b  0
+			return r
+		r  a % b
+
+
+
+gcd()5, 15
+364
+2
+9
+99
+gcd()735825,9900
+431306/2475
+
+
+str()1.2
+99/14

